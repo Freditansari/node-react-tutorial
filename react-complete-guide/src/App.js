@@ -45,6 +45,7 @@ swicthNameHandler= (newName)=>{
           {/* <button onClick={this.swicthNameHandler()}></button>  
         this will be run directly*/}
           {/* you can do this: 
+          this is how you pass value into other method in project
           <button onClick={this.swicthNameHandler.bind(this, 'johannesburgess')}>click me</button> */}
            <button onClick={() => this.swicthNameHandler('you can also do this!!')}>click me</button>
           <Person 
