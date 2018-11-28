@@ -2,10 +2,14 @@ import React from 'react';
 //import css to component
 import './Person.css'
 
+
 const person =(props)=>{
+
+
     // return <p>I'm a person and i'm {Math.floor(Math.random() * 100)} years old</p>
     return (
-        <div className='Person'>
+        
+        <div className='Person' >
             {/* props.click is how you call method from another components.
                     props.click is defined in the second Person tag in App.js
 
@@ -17,6 +21,7 @@ const person =(props)=>{
             {/* two way bindings tutorial */}
             <input type="text" onChange ={props.changed} value={props.name}></input>
         </div>
+     
     )
 };
 

@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Person from './Person/Person'
 
+
+
 class App extends Component {
 
 state={
@@ -75,11 +77,26 @@ togglePersonsHandler=()=>{
       font : 'inherit',
       border : '1px solid blue',
       padding : '8 px',
-      cursor : 'pointer'
+      cursor : 'pointer',
+      //radium only :
+      ':hover' : {
+        backgroundColor: 'lightgreen',
+        color : 'black'
+      }
     
     };
 
     let persons = null;
+
+    //setting classes name dynamically
+    const classes =[];
+    if (this.state.persons.length<=2){
+      classes.push('red');
+    }
+    if (this.state.persons.length<=1){
+      classes.push('bold');
+    }
+  
 
     if (this.state.showPersons){
           persons=(
@@ -93,56 +110,51 @@ togglePersonsHandler=()=>{
                 key={person.id}
                 changed={(event)=>this.nameChangedHandler(event, person.id)} />
               })}
-                {/* <Person 
-                name = {this.state.persons[0].name} 
-                age ={this.state.persons[0].age} />
-                
-                <Person 
-                name = {this.state.persons[1].name} 
-                age ={this.state.persons[1].age}
-                click = {this.swicthNameHandler.bind(this, 'bomburgess')} 
-                changed={this.nameChangedHandler}> Hobby : ngetrek 
-                </Person>
-                
-                <Person 
-                name = {this.state.persons[2].name} 
-                age ={this.state.persons[2].age} /> */}
             </div>
           );
+          style.backgroundColor='red';
+
+          //radium feature
+          style[':hover']={
+            backgroundColor:'salmon',
+            color:'black'
+          }
     }
 
 
     // return React.createElement('div', {className : 'App'}, React.createElement('h1', null, 'hello there! General Kenobi!'));
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {/* <button onClick={this.swicthNameHandler()}></button>  
-        this will be run directly*/}
-          {/* you can do this: 
-          this is how you pass value into other method in project
-          <button onClick={this.swicthNameHandler.bind(this, 'johannesburgess')}>click me</button> */}
-           
-           {/* using the inline style defined above
-          <button style={style} onClick={() => this.swicthNameHandler('you can also do this!!')}>click me</button> */}
-          <button style={style} onClick={this.togglePersonsHandler}>click me</button>
-          {persons}
-       
+          <div className="App">
+            <header className="App-header">
+              {/* <img src={logo} className="App-logo" alt="logo" />
+              <p>
+                Edit <code>src/App.js</code> and save to reload.
+              </p>
+              <a
+                className="App-link"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn React
+              </a> */}
+              {/* <button onClick={this.swicthNameHandler()}></button>  
+            this will be run directly*/}
+              {/* you can do this: 
+              this is how you pass value into other method in project
+              <button onClick={this.swicthNameHandler.bind(this, 'johannesburgess')}>click me</button> */}
+              
+              {/* using the inline style defined above
+              <button style={style} onClick={() => this.swicthNameHandler('you can also do this!!')}>click me</button> */}
+              <p className={classes.join(' ')}>this is actually working</p>
+              <button style={style} onClick={this.togglePersonsHandler}>click me</button>
+              {persons}
           
-        </header>
-      
-      </div>
+              
+            </header>
+          
+          </div>
+
 
     );
   }
