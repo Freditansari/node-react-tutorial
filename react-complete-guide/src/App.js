@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person'
 
 
@@ -73,28 +73,29 @@ togglePersonsHandler=()=>{
   render() {
 
     const style = {
-      backgroundColor : 'white',
-      font : 'inherit',
-      border : '1px solid blue',
-      padding : '8 px',
-      cursor : 'pointer',
-      //radium only :
-      ':hover' : {
-        backgroundColor: 'lightgreen',
-        color : 'black'
-      }
+      // backgroundColor : 'white',
+      // font : 'inherit',
+      // border : '1px solid blue',
+      // padding : '8 px',
+      // cursor : 'pointer',
+      // //radium only :
+      // // ':hover' : {
+      // //   backgroundColor: 'lightgreen',
+      // //   color : 'black'
+      // // }
     
     };
 
     let persons = null;
+    let btnClass = '';
 
     //setting classes name dynamically
-    const classes =[];
+    const assignedClasses =[];
     if (this.state.persons.length<=2){
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length<=1){
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
   
 
@@ -112,7 +113,9 @@ togglePersonsHandler=()=>{
               })}
             </div>
           );
-          style.backgroundColor='red';
+
+          btnClass=classes.red;
+          // style.backgroundColor='red';
 
           //radium feature
           style[':hover']={
@@ -124,7 +127,7 @@ togglePersonsHandler=()=>{
 
     // return React.createElement('div', {className : 'App'}, React.createElement('h1', null, 'hello there! General Kenobi!'));
     return (
-          <div className="App">
+          <div className={classes.App}>
             <header className="App-header">
               {/* <img src={logo} className="App-logo" alt="logo" />
               <p>
@@ -146,8 +149,8 @@ togglePersonsHandler=()=>{
               
               {/* using the inline style defined above
               <button style={style} onClick={() => this.swicthNameHandler('you can also do this!!')}>click me</button> */}
-              <p className={classes.join(' ')}>this is actually working</p>
-              <button style={style} onClick={this.togglePersonsHandler}>click me</button>
+              <p className={assignedClasses.join(' ')}>this is actually working</p>
+              <button className={btnClass} onClick={this.togglePersonsHandler}>click me</button>
               {persons}
           
               

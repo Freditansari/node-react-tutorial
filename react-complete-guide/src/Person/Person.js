@@ -1,6 +1,6 @@
 import React from 'react';
 //import css to component
-import './Person.css'
+import classes from './Person.css'
 
 
 const person =(props)=>{
@@ -9,7 +9,7 @@ const person =(props)=>{
     // return <p>I'm a person and i'm {Math.floor(Math.random() * 100)} years old</p>
     return (
         
-        <div className='Person' >
+        <div className={classes.Person} >
             {/* props.click is how you call method from another components.
                     props.click is defined in the second Person tag in App.js
 
