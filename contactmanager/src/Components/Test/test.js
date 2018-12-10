@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+
+//how to fetch data with get from an remote api
+
 class test extends Component {
   state = {
     id: "",
@@ -8,7 +11,6 @@ class test extends Component {
   };
 
   componentDidMount() {
-    console.log("hello bitch! from component did mount");
     fetch("https://jsonplaceholder.typicode.com/todos/1")
       .then(response => response.json())
       .then(data =>
@@ -20,6 +22,7 @@ class test extends Component {
         })
       );
   }
+
   render() {
     const { id, title, userId, body } = this.state;
     return (

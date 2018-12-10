@@ -4,6 +4,7 @@ import { Consumer } from "../../context";
 import uuid from "uuid";
 
 import TextInputGroup from "../layout/TextInputGroup";
+import Axios from "axios";
 
 class AddContact extends Component {
   state = {
@@ -39,8 +40,10 @@ class AddContact extends Component {
       email,
       phone
     };
-
-    dispatch({ type: "ADD_CONTACT", payload: newContact });
+    //adding new contact
+    Axios.post("https://jsonplaceholder.typicode.com/users/", newContact).then(
+      res => dispatch({ type: "ADD_CONTACT", payload: res.data })
+    );
 
     this.setState({
       name: "",

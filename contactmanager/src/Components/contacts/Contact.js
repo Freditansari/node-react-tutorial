@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Consumer } from "../../context";
+import axios from "axios";
 
 class Contact extends Component {
   state = {
@@ -8,12 +9,17 @@ class Contact extends Component {
   };
 
   onDeleteClick = (id, dispatch) => {
-    dispatch({ type: "DELETE_CONTACT", payload: id });
+    //how to do delete
+    axios
+      .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+      .then(response => {
+        dispatch({ type: "DELETE_CONTACT", payload: id });
+      });
   };
 
   render() {
     //this pattern is called desctructuring
-    const { id, name, email, phone } = this.props.contact;
+    const { id, name, email, phone, company } = this.props.contact;
 
     //putting the show contactinfo state to showcontact info variable
     const { showContactInfo } = this.state;
@@ -47,6 +53,7 @@ class Contact extends Component {
                 <ul className="list-group">
                   <li className="list-group-item">{email}</li>
                   <li className="list-group-item">{phone}</li>
+                  {/* <li className="list-group-item">{company.name}</li> */}
                 </ul>
               ) : null}
             </div>
