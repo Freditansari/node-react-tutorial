@@ -17,7 +17,45 @@ class AddContact extends Component {
   //this line will set state into value of the forms
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
-  onSubmit = (dispatch, e) => {
+  // onSubmit = (dispatch, e) => {
+  //   e.preventDefault();
+  //   const { name, email, phone } = this.state;
+
+  //   if (name === "") {
+  //     this.setState({ errors: { name: "Name is required" } });
+  //     return;
+  //   }
+  //   if (email === "") {
+  //     this.setState({ errors: { email: "Email is required" } });
+  //     return;
+  //   }
+  //   if (phone === "") {
+  //     this.setState({ errors: { phone: "phone is required" } });
+  //     return;
+  //   }
+
+  //   const newContact = {
+  //     id: uuid(),
+  //     name,
+  //     email,
+  //     phone
+  //   };
+  //   //adding new contact
+  //   Axios.post("https://jsonplaceholder.typicode.com/users/", newContact).then(
+  //     res => dispatch({ type: "ADD_CONTACT", payload: res.data })
+  //   );
+
+  //   this.setState({
+  //     name: "",
+  //     email: "",
+  //     phone: "",
+  //     errors: {}
+  //   });
+
+  //   //how to redirect
+  //   this.props.history.push("/");
+  // };
+  onSubmit = async (dispatch, e) => {
     e.preventDefault();
     const { name, email, phone } = this.state;
 
@@ -40,10 +78,14 @@ class AddContact extends Component {
       email,
       phone
     };
-    //adding new contact
-    Axios.post("https://jsonplaceholder.typicode.com/users/", newContact).then(
-      res => dispatch({ type: "ADD_CONTACT", payload: res.data })
+    //adding new contact using async await
+    //try catch for workaround on small bugs where i cannot delete added item
+
+    const res = await Axios.post(
+      "https://jsonplaceholder.typicode.com/users/",
+      newContact
     );
+    dispatch({ type: "ADD_CONTACT", payload: res.data });
 
     this.setState({
       name: "",

@@ -58,10 +58,9 @@ export class Provider extends Component {
   };
 
   //fetching data from server
-  componentDidMount() {
-    Axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
-      this.setState({ contacts: res.data });
-    });
+  async componentDidMount() {
+    const res = await Axios.get("https://jsonplaceholder.typicode.com/users");
+    this.setState({ contacts: res.data });
   }
 
   render() {

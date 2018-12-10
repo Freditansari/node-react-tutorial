@@ -8,13 +8,25 @@ class Contact extends Component {
     showContactInfo: false
   };
 
-  onDeleteClick = (id, dispatch) => {
+  // onDeleteClick = (id, dispatch) => {
+  //   //how to do delete
+  //   axios
+  //     .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
+  //     .then(response => {
+  //       dispatch({ type: "DELETE_CONTACT", payload: id });
+  //     });
+  // };
+  onDeleteClick = async (id, dispatch) => {
     //how to do delete
-    axios
-      .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
-      .then(response => {
-        dispatch({ type: "DELETE_CONTACT", payload: id });
-      });
+    //try catch for workaround on small bugs where i cannot delete added item
+
+    try {
+      await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+
+      dispatch({ type: "DELETE_CONTACT", payload: id });
+    } catch (error) {
+      dispatch({ type: "DELETE_CONTACT", payload: id });
+    }
   };
 
   render() {
