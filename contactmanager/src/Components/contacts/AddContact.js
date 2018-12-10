@@ -3,6 +3,8 @@ import { Consumer } from "../../context";
 //uuid module installed with sudo npm install uuid
 import uuid from "uuid";
 
+import TextInputGroup from "../layout/TextInputGroup";
+
 class AddContact extends Component {
   state = {
     name: "",
@@ -20,12 +22,15 @@ class AddContact extends Component {
 
     if (name === "") {
       this.setState({ errors: { name: "Name is required" } });
+      return;
     }
     if (email === "") {
       this.setState({ errors: { email: "Email is required" } });
+      return;
     }
-    if (email === "") {
+    if (phone === "") {
       this.setState({ errors: { phone: "phone is required" } });
+      return;
     }
 
     const newContact = {
@@ -43,10 +48,13 @@ class AddContact extends Component {
       phone: "",
       errors: {}
     });
+
+    //how to redirect
+    this.props.history.push("/");
   };
 
   render() {
-    const { name, email, phone } = this.state;
+    const { name, email, phone, errors } = this.state;
     return (
       <Consumer>
         {value => {
@@ -56,7 +64,7 @@ class AddContact extends Component {
               <div className="card-header">Add Contact</div>
               <div className="card-body">
                 <form onSubmit={this.onSubmit.bind(this, dispatch)}>
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label htmlFor="name">Name</label>
                     <input
                       type="text"
@@ -66,31 +74,33 @@ class AddContact extends Component {
                       value={name}
                       onChange={this.onChange}
                     />
-                  </div>
+                  </div> */}
+                  <TextInputGroup
+                    label="Name"
+                    name="name"
+                    placeholder="enter name"
+                    value={name}
+                    onChange={this.onChange}
+                    error={errors.name}
+                  />
+                  <TextInputGroup
+                    label="email"
+                    name="email"
+                    placeholder="enter email ..."
+                    type="email"
+                    value={email}
+                    onChange={this.onChange}
+                    error={errors.email}
+                  />
 
-                  <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                      type="email"
-                      className="form-control form-control-lg"
-                      name="email"
-                      placeholder="Enter email...."
-                      value={email}
-                      onChange={this.onChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="phone">Phone</label>
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      name="phone"
-                      placeholder="Enter phone...."
-                      value={phone}
-                      onChange={this.onChange}
-                    />
-                  </div>
+                  <TextInputGroup
+                    label="phone"
+                    name="phone"
+                    placeholder="enter phone number.."
+                    value={phone}
+                    onChange={this.onChange}
+                    error={errors.phone}
+                  />
                   <input
                     type="submit"
                     value="Add Contact"
