@@ -6,7 +6,7 @@ import uuid from "uuid";
 import TextInputGroup from "../layout/TextInputGroup";
 import Axios from "axios";
 
-class AddContact extends Component {
+class EditContact extends Component {
   state = {
     name: "",
     email: "",
@@ -14,47 +14,28 @@ class AddContact extends Component {
     errors: {}
   };
 
+  async componentDidMount() {
+    /**
+     * getting id from parameter.
+     * fetch the related data from server
+     * set it to the state in component
+     */
+    const { id } = this.props.match.params;
+    const res = await Axios.get(
+      `https://jsonplaceholder.typicode.com/users/${id}`
+    );
+
+    const contact = res.data;
+    this.setState({
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone
+    });
+  }
+
   //this line will set state into value of the forms
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
-  // onSubmit = (dispatch, e) => {
-  //   e.preventDefault();
-  //   const { name, email, phone } = this.state;
-
-  //   if (name === "") {
-  //     this.setState({ errors: { name: "Name is required" } });
-  //     return;
-  //   }
-  //   if (email === "") {
-  //     this.setState({ errors: { email: "Email is required" } });
-  //     return;
-  //   }
-  //   if (phone === "") {
-  //     this.setState({ errors: { phone: "phone is required" } });
-  //     return;
-  //   }
-
-  //   const newContact = {
-  //     id: uuid(),
-  //     name,
-  //     email,
-  //     phone
-  //   };
-  //   //adding new contact
-  //   Axios.post("https://jsonplaceholder.typicode.com/users/", newContact).then(
-  //     res => dispatch({ type: "ADD_CONTACT", payload: res.data })
-  //   );
-
-  //   this.setState({
-  //     name: "",
-  //     email: "",
-  //     phone: "",
-  //     errors: {}
-  //   });
-
-  //   //how to redirect
-  //   this.props.history.push("/");
-  // };
   onSubmit = async (dispatch, e) => {
     e.preventDefault();
     const { name, email, phone } = this.state;
@@ -80,11 +61,25 @@ class AddContact extends Component {
     };
     //adding new contact using async await
 
-    const res = await Axios.post(
-      "https://jsonplaceholder.typicode.com/users/",
-      newContact
+    // const res = await Axios.post(
+    //   "https://jsonplaceholder.typicode.com/users/",
+    //   newContact
+    // );
+    // dispatch({ type: "ADD_CONTACT", payload: res.data });
+
+    const updateContact = {
+      name,
+      email,
+      phone
+    };
+    const { id } = this.props.match.params;
+
+    const res = await Axios.put(
+      `https://jsonplaceholder.typicode.com/users/${id}`,
+      updateContact
     );
-    dispatch({ type: "ADD_CONTACT", payload: res.data });
+
+    dispatch({ type: "UPDATE_CONTACT", payload: res.data });
 
     this.setState({
       name: "",
@@ -105,7 +100,7 @@ class AddContact extends Component {
           const { dispatch } = value;
           return (
             <div className="card mb-3">
-              <div className="card-header">Add Contact</div>
+              <div className="card-header">Edit Contact</div>
               <div className="card-body">
                 <form onSubmit={this.onSubmit.bind(this, dispatch)}>
                   {/* <div className="form-group">
@@ -147,7 +142,7 @@ class AddContact extends Component {
                   />
                   <input
                     type="submit"
-                    value="Add Contact"
+                    value="update Contact"
                     className="btn btn-light btn-block"
                   />
                 </form>
@@ -160,4 +155,4 @@ class AddContact extends Component {
   }
 }
 
-export default AddContact;
+export default EditContact;
