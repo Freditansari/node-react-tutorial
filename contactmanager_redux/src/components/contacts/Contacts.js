@@ -11,10 +11,11 @@ import Contact from "./Contact";
 */
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { GET_CONTACTS } from "../../actions/types";
+import { getContacts } from "../../actions/contactActions";
 
 class Contacts extends Component {
   componentDidMount() {
+    //this line is to call the contact actions service layer
     this.props.getContacts();
   }
   // state = {
@@ -44,10 +45,7 @@ const mapStateToProps = state => ({
   contacts: state.contact.contacts
 });
 
-const mapDispatchToProps = dispatch => ({
-  getContacts: () => dispatch({ type: GET_CONTACTS })
-});
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getContacts }
 )(Contacts);
